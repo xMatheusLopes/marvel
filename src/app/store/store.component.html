@@ -1,0 +1,38 @@
+<mat-toolbar color="primary" class="mat-elevation-z8 toolbar">
+    <span>Marvel Store</span>
+    <mat-icon aria-hidden="false" aria-label="shopping-cart" matBadge="{{settings.cartItems.size}}" matBadgeColor="accent">shopping_cart</mat-icon>
+</mat-toolbar>
+
+<div class="center" *ngIf="settings.isLoading">
+    <mat-spinner [diameter]="45"></mat-spinner>
+</div>
+<div *ngIf="!settings.isLoading" class="container">
+    <div class="filter">
+        <h2>Para começar, selecione um personagem que você ama </h2>
+        <p>Assim, podemos selecionar os melhores quadrinhos de acordo com seu gosto</p>
+        <div class="row">
+            <mat-form-field>
+                <mat-label>Personagem...</mat-label>
+                <mat-select [(ngModel)]="settings.selectedChar" (selectionChange)="loadCharacterStories()">
+                    <mat-option *ngFor="let character of settings.characters" [value]="character">
+                    {{character.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-spinner *ngIf="settings.isStoriesLoading" class="mtl-16" [diameter]="25"></mat-spinner>
+        </div>
+    </div>
+
+    <mat-grid-list cols="6" class="full-width" rowHeight="500px">
+        <mat-grid-tile *ngFor="let item of settings.stories">
+            <mat-card class="mat-elevation-z8 card">
+                <img src="{{settings.selectedChar.thumbnail.path}}/portrait_xlarge.jpg">
+                <h5>{{ item.title }}</h5>
+                <p class="full-price">De R$ 50,00</p>
+                <h4 class="green">R$20,00</h4>
+                <button (click)="addToCart(item, 20)" class="flex" mat-raised-button color="primary"><mat-icon>add</mat-icon> Carrinho</button>
+            </mat-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>
+
