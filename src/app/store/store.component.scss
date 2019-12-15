@@ -57,13 +57,50 @@
     h4 {
         margin-top: 0;
     }
-    .green {
-        color: rgb(0, 138, 0);
+
+    h5 {
+        height: 48px;
     }
 
     .flex {
         display: flex;
     }
+}
+
+.cart {
+    display: flex;
+    height: 100%;
+    margin-bottom: 10px;
+
+    .item {
+        display: flex;
+        flex-direction: column;
+        line-height: 20px;
+        overflow: hidden;
+        padding: 4px;
+    }
+}
+
+.mat-menu-item {
+    margin-bottom: 5px;
+    margin-top: 5px;
+    height: 100%;
+}
+
+.mat-menu-item .mat-icon {
+    margin-right: 0px;
+}
+
+.grey {
+    color: grey;
+}
+
+.green {
+    color: rgb(0, 138, 0);
+}
+
+.resume {
+    padding: 10px;;
 }
 
 @keyframes fadein {

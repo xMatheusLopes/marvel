@@ -1,6 +1,36 @@
 <mat-toolbar color="primary" class="mat-elevation-z8 toolbar">
     <span>Marvel Store</span>
-    <mat-icon aria-hidden="false" aria-label="shopping-cart" matBadge="{{settings.cartItems.size}}" matBadgeColor="accent">shopping_cart</mat-icon>
+    <div>
+        <button matRipple mat-icon-button [matMenuTriggerFor]="menu" aria-label="shopping_card">
+            <mat-icon matBadge="{{settings.cartItems.size}}" matBadgeColor="accent">shopping_cart</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <div mat-menu-item *ngFor="let cart of itemsCartToArray()">
+                <div class="cart">
+                    <img src="{{settings.selectedChar.thumbnail.path}}/portrait_small.jpg">
+                    <div class="item">
+                        <span>{{cart.item.title}}</span>
+                        <span class="grey">
+                            <button (click)="addItem(cart.item.id); $event.stopPropagation()" mat-icon-button color="primary">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                            {{cart.quantity}}
+                            <button (click)="removeItem(cart.item.id); $event.stopPropagation()" mat-icon-button color="primary">
+                                <mat-icon>remove</mat-icon>
+                            </button>
+                        </span>
+                        <span class="green">R${{ getItemTotalPrice(cart.value, cart.quantity) }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="resume">
+                <h4 *ngIf="!settings.finished">Total: <span class="green">R${{getTotalPrice()}}</span></h4>
+                <button *ngIf="!settings.finished" (click)="finishBuy(); $event.stopPropagation()" mat-raised-button color="primary">Finalizar Compra</button>
+                <h4 *ngIf="settings.finished">Obrigado por comprar conosco!</h4>
+            </div>
+        </mat-menu>
+    </div>
 </mat-toolbar>
 
 <div class="center" *ngIf="settings.isLoading">
@@ -12,7 +42,7 @@
         <p>Assim, podemos selecionar os melhores quadrinhos de acordo com seu gosto</p>
         <div class="row">
             <mat-form-field>
-                <mat-label>Personagem...</mat-label>
+                <mat-label>Personagem</mat-label>
                 <mat-select [(ngModel)]="settings.selectedChar" (selectionChange)="loadCharacterStories()">
                     <mat-option *ngFor="let character of settings.characters" [value]="character">
                     {{character.name}}
@@ -23,14 +53,14 @@
         </div>
     </div>
 
-    <mat-grid-list cols="6" class="full-width" rowHeight="500px">
+    <mat-grid-list cols="{{ settings.gridCols }}" class="full-width" rowHeight="500px" (window:resize)="onResize()">
         <mat-grid-tile *ngFor="let item of settings.stories">
             <mat-card class="mat-elevation-z8 card">
                 <img src="{{settings.selectedChar.thumbnail.path}}/portrait_xlarge.jpg">
                 <h5>{{ item.title }}</h5>
                 <p class="full-price">De R$ 50,00</p>
                 <h4 class="green">R$20,00</h4>
-                <button (click)="addToCart(item, 20)" class="flex" mat-raised-button color="primary"><mat-icon>add</mat-icon> Carrinho</button>
+                <button (click)="addToCart(item, 20)" matRipple class="flex" mat-raised-button color="primary"><mat-icon>add</mat-icon> Carrinho</button>
             </mat-card>
         </mat-grid-tile>
     </mat-grid-list>

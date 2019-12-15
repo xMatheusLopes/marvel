@@ -18,6 +18,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatProgressSpinnerModule,
     FormsModule,
     MatButtonModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatMenuModule,
+    MatRippleModule
   ],
   providers: [],
   bootstrap: [AppComponent]
